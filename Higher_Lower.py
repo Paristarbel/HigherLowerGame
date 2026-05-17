@@ -1,32 +1,58 @@
-print("         WELCOME TO HIGHER LOWER GAME😊⭐         ")
-print("*****Choose which person has MORE Instagram followers*****")
 
+from Art import logo
+print(logo)
+
+from Game_data import higher_lower_data
+import random
+
+account_a=random.choice(higher_lower_data)
+account_b=random.choice(higher_lower_data)
+
+if account_a==account_b:
+    account_b=random.choice(higher_lower_data)
 score=0
-def higher():
-    Questions=[]
-    Q1="Ariana Grande is a musician and actress from the United States."
-    Q2="Taylor Swift is a musician from the United States."
-    Q3="Cristiano Ronaldo is a football player from Portugal."
-    Q4="Zendaya is an actress and musician from the United States."
-    Q5="Lionel Messi is a football player from Argentina."
-    Q6="Justin Bieber is a musician from Canada."
-    Q7="Kim Kardashian is a media personality and businesswoman from the United States."
-    Q8="Neymar Jr is a football player from Brazil."
-    Q9="Billie Eilish is a musician from the United States."
-    Q10="Selena Gomez is a musician and actress from the United States."
+game_continuation=True
+account_b=random.choice(higher_lower_data)
 
-    Questions.append(Q1)
-    Questions.append(Q2)
-    Questions.append(Q3)
-    Questions.append(Q4)
-    Questions.append(Q5)
-    Questions.append(Q6)
-    Questions.append(Q7)
-    Questions.append(Q8)
-    Questions.append(Q9)
-    Questions.append(Q10)
+while game_continuation:
+      account_a=account_b
+      if account_a==account_b:
+            account_b=random.choice(higher_lower_data)
+      def format_data(account):
+            #Format the account data into printable format
+            account_name= account["name"]
+            account_descr=account["description"]
+            account_country=account["country"]
 
-    print(Questions)
-    answer=input("Who has more followers? Type 'A' or 'B':").lower()
+            return f"{account_name}, a {account_descr} , from {account_country}"
 
-higher()
+      print(f"Compare A: {format_data(account_a)}")
+      from Art import vs
+      print(vs)
+      print(f"Against B: {format_data(account_b)}")
+
+      # Ask for user to guess
+      guess=input("Who has more followers? Type A or B: ").lower()
+      print("\n"*20)
+
+      # Check if user is correct 
+      def check_answer(user_guess,a_followers,b_followers):
+            
+            if a_followers >b_followers:
+                  return user_guess=="a"
+            
+            else:
+                  return user_guess == "b"
+            
+      a_follower_count=account_a["followers"]
+      b_followers_count=account_b["followers"]
+      is_correct= check_answer(guess,a_follower_count,b_followers_count)
+
+
+      if is_correct:
+            score+=1
+            print(f"You're right! , Current score {score}")
+      else:
+            score+=0
+            print(f"Sorry, that's wrong.Final score: {score}")
+            game_continuation=False
